@@ -1,11 +1,12 @@
 # Overtime Calculator
 
-A simple application that allows you to upload screenshots of worker hours and calculate overtime payments. The app generates a formatted email template that can be easily copied to the clipboard.
+A simple application that allows you to upload Excel worksheets or screenshots of worker hours and calculate overtime payments. The app automatically extracts hours from the uploaded files and generates a formatted email template that can be easily copied to the clipboard.
 
 ## Features
 
-- Upload screenshots for three workers: Brad, Kallen, and Jack
-- Input total hours worked
+- Upload Excel worksheets or screenshots for three workers: Brad, Kallen, and Jack
+- Automatic extraction of hours worked from uploaded files
+- Manual override option for extracted hours
 - Automatic calculation of overtime (hours beyond 8.5 hours)
 - Generate formatted email template
 - Copy to clipboard functionality
@@ -24,11 +25,17 @@ A simple application that allows you to upload screenshots of worker hours and c
 
 ## How to Use
 
-1. Upload screenshots for each worker
-2. Enter the total hours worked for each worker
-3. The system automatically calculates overtime (hours beyond 8.5)
-4. Click "Generate Email Template"
-5. Copy the generated email to your clipboard
+1. Upload Excel worksheets or screenshots for each worker
+2. The system will attempt to extract hours automatically
+3. Review and adjust extracted hours if needed
+4. The system automatically calculates overtime (hours beyond 8.5)
+5. Click "Generate Email Template"
+6. Copy the generated email to your clipboard
+
+## Supported File Types
+
+- Excel files (.xlsx, .xls)
+- Image files (screenshots in common formats like .png, .jpg)
 
 ## Development
 
@@ -37,6 +44,8 @@ This project uses:
 - Vite
 - Tailwind CSS
 - Vitest for testing
+- XLSX for Excel parsing
+- Tesseract.js for OCR
 
 To run locally:
 ```

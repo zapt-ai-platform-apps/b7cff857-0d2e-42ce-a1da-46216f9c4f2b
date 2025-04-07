@@ -2,7 +2,7 @@ import React from 'react';
 import FileUpload from './FileUpload';
 import { calculateOvertimeHours, calculateRegularHours, STANDARD_HOURS_WITH_LUNCH } from '../utils/calculations';
 
-const WorkerInput = ({ worker, data, onChange, onFileUpload }) => {
+const WorkerInput = ({ worker, data, onChange, onFileUpload, onHoursExtracted }) => {
   const handleTotalHoursChange = (e) => {
     const totalHours = parseFloat(e.target.value) || 0;
     onChange(worker.name, 'totalHours', totalHours);
@@ -15,7 +15,11 @@ const WorkerInput = ({ worker, data, onChange, onFileUpload }) => {
     <div className="bg-white p-6 rounded-lg shadow-md mb-6">
       <h2 className="text-xl font-bold mb-4 text-gray-800">{worker.name}</h2>
       
-      <FileUpload worker={worker} onFileUpload={onFileUpload} />
+      <FileUpload 
+        worker={worker} 
+        onFileUpload={onFileUpload}
+        onHoursExtracted={onHoursExtracted}
+      />
       
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         <div>
@@ -29,7 +33,13 @@ const WorkerInput = ({ worker, data, onChange, onFileUpload }) => {
             value={data.totalHours || ''}
             onChange={handleTotalHoursChange}
             className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm box-border"
+            placeholder="Enter hours"
           />
+          {data.autoExtracted && (
+            <p className="mt-1 text-xs text-green-600">
+              ✓ Hours automatically extracted from file
+            </p>
+          )}
         </div>
         
         <div>

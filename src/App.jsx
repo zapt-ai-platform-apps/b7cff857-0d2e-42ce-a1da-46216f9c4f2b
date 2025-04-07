@@ -7,9 +7,9 @@ import * as Sentry from '@sentry/browser';
 export default function App() {
   const [files, setFiles] = useState({});
   const [hoursData, setHoursData] = useState({
-    Brad: { totalHours: 0 },
-    Kallen: { totalHours: 0 },
-    Jack: { totalHours: 0 },
+    Brad: { totalHours: 0, autoExtracted: false },
+    Kallen: { totalHours: 0, autoExtracted: false },
+    Jack: { totalHours: 0, autoExtracted: false },
   });
   
   const [calculations, setCalculations] = useState({});
@@ -37,7 +37,21 @@ export default function App() {
       ...prev,
       [workerName]: {
         ...prev[workerName],
-        [field]: value
+        [field]: value,
+        // If user manually changes hours, mark as not auto-extracted
+        ...(field === 'totalHours' ? { autoExtracted: false } : {})
+      }
+    }));
+  };
+
+  const handleHoursExtracted = (workerName, totalHours) => {
+    console.log(`Auto-extracted hours for ${workerName}:`, totalHours);
+    setHoursData(prev => ({
+      ...prev,
+      [workerName]: {
+        ...prev[workerName],
+        totalHours,
+        autoExtracted: true
       }
     }));
   };
@@ -50,7 +64,7 @@ export default function App() {
       // Validate all files are uploaded
       const allFilesUploaded = Object.values(filesUploaded).every(status => status);
       if (!allFilesUploaded) {
-        alert("Please upload screenshots for all workers before calculating.");
+        alert("Please upload files for all workers before calculating.");
         setCalculating(false);
         return;
       }
@@ -84,7 +98,7 @@ export default function App() {
       <div className="max-w-4xl mx-auto">
         <header className="text-center mb-10">
           <h1 className="text-3xl font-bold mb-2">Overtime Calculator</h1>
-          <p className="text-gray-600">Upload screenshots and calculate overtime for each worker</p>
+          <p className="text-gray-600">Upload Excel worksheets or screenshots to calculate overtime</p>
         </header>
         
         <div className="mb-8">
@@ -95,6 +109,7 @@ export default function App() {
               data={hoursData[worker.name]}
               onChange={handleHoursChange}
               onFileUpload={handleFileUpload}
+              onHoursExtracted={handleHoursExtracted}
             />
           ))}
           

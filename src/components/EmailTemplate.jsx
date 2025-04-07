@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import * as Sentry from '@sentry/browser';
 
 const EmailTemplate = ({ workers, calculations }) => {
   const [copied, setCopied] = useState(false);
