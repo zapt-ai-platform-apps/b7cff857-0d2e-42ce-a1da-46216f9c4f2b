@@ -1,7 +1,7 @@
 {
-    "name": "reactjs-vite-tailwind-vercel",
+    "name": "overtime-calculator",
     "version": "1.0.0",
-    "description": "ReactJS app with Vite, Tailwind",
+    "description": "Calculate overtime for workers and generate email templates",
     "type": "module",
     "scripts": {
         "dev": "vite",
