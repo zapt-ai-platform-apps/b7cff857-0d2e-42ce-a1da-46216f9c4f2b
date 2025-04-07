@@ -31,19 +31,28 @@ export const calculateRegularHours = (totalHours) => {
   return Math.min(totalHours, STANDARD_HOURS_WITH_LUNCH);
 };
 
+// Helper function to round to 2 decimal places for money values
+const roundToTwoDecimals = (value) => {
+  return Math.round(value * 100) / 100;
+};
+
 export const calculatePay = (worker, totalHours = 0) => {
   const overtimeHours = calculateOvertimeHours(totalHours);
   const regularHours = calculateRegularHours(totalHours);
   
   // Only Kallen gets paid for regular hours
-  const regularPay = worker.name === 'Kallen' ? (worker.regularRate * regularHours) : 0;
-  const overtimePay = worker.overtimeRate * overtimeHours;
+  const regularPay = worker.name === 'Kallen' 
+    ? roundToTwoDecimals(worker.regularRate * regularHours) 
+    : 0;
+  
+  // Round overtime pay to 2 decimal places (fix for test precision issue)
+  const overtimePay = roundToTwoDecimals(worker.overtimeRate * overtimeHours);
   
   return {
     regularHours: worker.name === 'Kallen' ? regularHours : 0,
     overtimeHours,
     regularPay,
     overtimePay,
-    totalPay: regularPay + overtimePay,
+    totalPay: roundToTwoDecimals(regularPay + overtimePay),
   };
 };
