@@ -7,9 +7,9 @@ import * as Sentry from '@sentry/browser';
 export default function App() {
   const [files, setFiles] = useState({});
   const [hoursData, setHoursData] = useState({
-    Brad: { overtimeHours: 0 },
-    Kallen: { regularHours: 0, overtimeHours: 0 },
-    Jack: { overtimeHours: 0 },
+    Brad: { totalHours: 0 },
+    Kallen: { totalHours: 0 },
+    Jack: { totalHours: 0 },
   });
   
   const [calculations, setCalculations] = useState({});
@@ -60,11 +60,10 @@ export default function App() {
       workers.forEach(worker => {
         const data = hoursData[worker.name];
         if (data) {
-          const { regularHours = 0, overtimeHours = 0 } = data;
+          const totalHours = data.totalHours || 0;
           results[worker.name] = {
-            ...calculatePay(worker, regularHours, overtimeHours),
-            regularHours,
-            overtimeHours
+            ...calculatePay(worker, totalHours),
+            totalHours
           };
         }
       });

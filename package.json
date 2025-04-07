@@ -5,9 +5,10 @@
     "type": "module",
     "scripts": {
         "dev": "vite",
-        "build": "vite build",
+        "build": "vitest run && vite build",
         "serve": "vite preview",
-        "start": "vite --host"
+        "start": "vite --host",
+        "test": "vitest"
     },
     "dependencies": {
         "@sentry/browser": "^8.41.0",
@@ -20,6 +21,7 @@
         "postcss": "^8.4.47",
         "tailwindcss": "^3.4.13",
         "vite": "^5.4.7",
-        "@sentry/vite-plugin": "^2.23.0"
+        "@sentry/vite-plugin": "^2.23.0",
+        "vitest": "^0.34.1"
     }
 }
